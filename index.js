@@ -12,13 +12,12 @@ const io = createSocketServer(server);
 app.set("io", io);
 io.engine.use(sessionMiddleware);
 
-const port = argvMap.get('port') ?? 3000;
+const PORT = argvMap.get('port') ?? 3000;
 
-server.listen(port, (err) => {
+server.listen(PORT, (err) => {
     if (!err) {
-        console.info(`Server Started at port ${port}`);
+        console.info(`Server Started at port ${PORT}`);
         return;
     }
     console.error(err);
-    process.exit();
 });
