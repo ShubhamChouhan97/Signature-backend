@@ -12,8 +12,7 @@ import convert from 'docx-pdf';
 import ExcelJS from 'exceljs';
 import mongoose from "mongoose";
 import { promisify } from "util"; // Assuming this is your converter/ adjust this import as per your file
-import pkg from "uuid";
-const { v4: uuidv4 } = pkg;
+import { v4 as uuidv4 } from "uuid";
 import { io } from '../config/socket.js';
 import os from "os";
 const unlinkAsync = promisify(fs.unlink);
