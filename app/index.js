@@ -21,14 +21,19 @@ export const sessionMiddleware = session({
 	saveUninitialized: false,
 	secret: process.env.SESSION_SECRET || "keyboard cat",
 	cookie: {
-		domain: process.env.BASE_DOMAIN
+		domain: process.env.BASE_DOMAIN || 'https://signature-backend-79t1.onrender.com'
 	}
 });
+// app.use(cors({
+// 	origin: (origin, cb) => {
+// 		return cb(null, origin);
+// 	},
+// 	credentials: true,
+// }))
 app.use(cors({
-	origin: (origin, cb) => {
-		return cb(null, origin);
-	},
+	origin: process.env.FRONTEND_URL,
 	credentials: true,
+
 }))
 // make uplaod static
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
