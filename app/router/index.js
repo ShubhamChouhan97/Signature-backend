@@ -7,13 +7,15 @@ import { checkLoginStatus } from "../middleware/checkAuth.js";
 
 const router = Router();
 // console all incoming request
-router.use((req, res, next) => {
-    console.log(`${req.method} ${req.url}`);
-    next();
+// router.use((req, res, next) => {
+//     console.log(`${req.method} ${req.url}`);
+//     next();
    
-  });
+//   });
 
-
+router.get('/', (req, res) => {
+    res.send('Welcome to the API use frontend');
+});
 router.use('/api', api);
 router.use('/signatures', signature);
 router.use(['/template', '/templates'], template);
