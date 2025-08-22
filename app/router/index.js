@@ -32,7 +32,7 @@ router.post('/login', async (req, res, next) => {
     }
 });
 
-router.get('/session', checkLoginStatus, async (req, res, next) => {
+router.get('/session',  async (req, res, next) => {
     try {
         console.log('console at router session');
         const sessionObj = {
