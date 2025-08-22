@@ -83,7 +83,7 @@ const __dirname = import.meta.dirname;
 // ✅ Use MongoDB session store
 export const sessionMiddleware = session({
     store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URL,     // your MongoDB connection string
+        mongoUrl: process.env.MONGO_CONNECTION_STRING,     // your MongoDB connection string
         collectionName: "sessions",          // collection for sessions
         ttl: 14 * 24 * 60 * 60               // session expiry in seconds (14 days)
     }),

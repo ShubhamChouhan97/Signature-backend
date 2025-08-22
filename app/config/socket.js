@@ -40,7 +40,7 @@ import { MongoClient } from "mongodb";
 export let io = null;
 
 export async function createSocketServer(server) {
-    const mongoClient = new MongoClient(process.env.MONGO_URL);
+    const mongoClient = new MongoClient(process.env.MONGO_CONNECTION_STRING);
     await mongoClient.connect();
 
     const db = mongoClient.db("socketIO"); // database for socket events
