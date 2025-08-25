@@ -92,7 +92,6 @@ export const sessionMiddleware = session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    domain:'.onrender.com',
     secure: process.env.NODE_ENV === "production", // HTTPS on Render
     httpOnly: true,
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
@@ -125,44 +124,16 @@ app.use(express.urlencoded({ extended: true }));
 // ✅ Routes
 app.use("/", router);
 
-app.get('/check-cookies', async (req, res) => {
-  try {
-    res.cookie("test1", "test1", {
-      domain: '.onrender.com',
-      sameSite: "lax",
-      path: "/",
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-    });
-    res.cookie("test2", "test2", {
-      domain: '.onrender.com',
-      sameSite: "lax",
-      path: "/",
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-    });
-    res.cookie("test3", "test3", {
-      domain: '.onrender.com',
-      sameSite: "lax",
-      path: "/",
-      httpOnly: true,
-      secure: false,
-    });
-    res.json({ cookies: req.cookies })
-  } catch (error) {
-    res.json({ error });
-  }
-});
-
 app.use( async (req, res, next) => {
-  const indexFilePath = path.join(__dirname, 'public', 'frontend-build', 'index.html');
+  const frontendBasePath = path.join(import.meta.dirname, '..', 'public', 'frontend-build');
+  const indexFilePath = path.join(frontendBasePath, 'index.html');
   try {
-    const filePath = path.join(__dirname, 'public', 'frontend-build', req.path);
-    const isFilePresent = await fs.promises.access(filePath);
-    if (!isFilePresent) {
-      return res.sendFile(indexFilePath);
+    const filePath = path.join(frontendBasePath, req.path);
+    const fsStat = await fs.promises.stat(filePath);
+    if (fsStat.isFile()) {
+      return res.sendFile(filePath);
     }
-    return res.sendFile(filePath);
+    return res.sendFile(indexFilePath);
   } catch (error) {
     return res.sendFile(indexFilePath);  
   }

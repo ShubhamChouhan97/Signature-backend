@@ -13,9 +13,6 @@ const router = Router();
    
 //   });
 
-router.get('/', (req, res) => {
-    res.send('Welcome to the API use frontend');
-});
 router.use('/api', api);
 router.use('/signatures', signature);
 router.use(['/template', '/templates'], template);
