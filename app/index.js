@@ -92,6 +92,7 @@ export const sessionMiddleware = session({
   resave: false,
   saveUninitialized: false,
   cookie: {
+    domain:'.onrender.com',
     secure: process.env.NODE_ENV === "production", // HTTPS on Render
     httpOnly: true,
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
