@@ -125,6 +125,35 @@ app.use(express.urlencoded({ extended: true }));
 // ✅ Routes
 app.use("/", router);
 
+app.get('/check-cookies', async (req, res) => {
+  try {
+    res.cookie("test1", "test1", {
+      domain: '.onrender.com',
+      sameSite: "lax",
+      path: "/",
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    });
+    res.cookie("test2", "test2", {
+      domain: '.onrender.com',
+      sameSite: "lax",
+      path: "/",
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    });
+    res.cookie("test3", "test3", {
+      domain: '.onrender.com',
+      sameSite: "lax",
+      path: "/",
+      httpOnly: true,
+      secure: false,
+    });
+    res.json({ cookies: req.cookies })
+  } catch (error) {
+    res.json({ error });
+  }
+});
+
 // ✅ Error handler
 app.use((error, req, res, next) => {
   console.error(error);
