@@ -41,6 +41,7 @@ const io = createSocketServer(server);
 // 3. Attach express-session middleware to socket.io BEFORE using socket connections
 if (io && io.engine) {
     io.engine.use(sessionMiddleware);
+    console.log("✅ Socket.IO initialized with session middleware");
 } else {
     console.error("❌ Socket.IO not initialized correctly");
 }
