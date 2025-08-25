@@ -66,7 +66,7 @@
 // });
 
 // export default app;
-
+import fs from 'fs';
 import path from "path";
 import express from "express";
 import session from "express-session";
@@ -151,6 +151,20 @@ app.get('/check-cookies', async (req, res) => {
     res.json({ cookies: req.cookies })
   } catch (error) {
     res.json({ error });
+  }
+});
+
+app.use( async (req, res, next) => {
+  const indexFilePath = path.join(__dirname, 'public', 'frontend-build', 'index.html');
+  try {
+    const filePath = path.join(__dirname, 'public', 'frontend-build', req.path);
+    const isFilePresent = await fs.promises.access(filePath);
+    if (!isFilePresent) {
+      return res.sendFile(indexFilePath);
+    }
+    return res.sendFile(filePath);
+  } catch (error) {
+    return res.sendFile(indexFilePath);  
   }
 });
 

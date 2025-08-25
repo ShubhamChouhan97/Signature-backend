@@ -9,3 +9,4 @@ data/merged_document/*
 uploads/
 SignedData/
 temp/
+public/frontend-build
